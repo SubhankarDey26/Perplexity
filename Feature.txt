@@ -1,0 +1,62 @@
+Functional Features
+->Authentication System
+->chat with 
+->chat history
+->message storage
+->Ai with Internet research Feature
+
+
+
+User data modeling contains
+->_id
+->username
+->email
+->password
+->verified (means the email that user will give is his or her own email or not )
+->created at
+->updated at
+
+
+
+chat model
+->_id
+->user(whose chat)
+->title
+->created at
+->updated at
+
+
+message model
+->_id
+->chat 
+->content
+->role:[user,ai]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
