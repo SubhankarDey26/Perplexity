@@ -45,7 +45,7 @@ userSchema.pre("save", async function () {
 
   // Prevent re-hashing if password is not modified
   if (!this.isModified("password")) {
-    return next()
+    return
   }
 
   try {

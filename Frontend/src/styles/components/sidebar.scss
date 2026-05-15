@@ -1,0 +1,142 @@
+@import '../variables.scss';
+
+.sidebar {
+  width: 250px;
+  height: 100vh;
+  background-color: $bg-darker;
+  border-right: 2px solid $border-color;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  overflow-y: auto;
+
+  &__header {
+    padding: $spacing-lg;
+    border-bottom: 1px solid $border-color;
+  }
+
+  &__new-chat-btn {
+    width: 100%;
+    padding: $spacing-md;
+    background-color: transparent;
+    color: $text-light;
+    border: 2px solid $border-light;
+    border-radius: $radius-md;
+    font-weight: 600;
+    font-size: $font-sm;
+    transition: all $transition-fast;
+    cursor: pointer;
+
+    &:hover {
+      border-color: $primary-color;
+      color: $primary-color;
+      background-color: rgba(79, 70, 229, 0.1);
+    }
+  }
+
+  &__content {
+    flex: 1;
+    overflow-y: auto;
+    padding: $spacing-lg 0;
+  }
+
+  &__section {
+    padding: 0 $spacing-md;
+    margin-bottom: $spacing-lg;
+  }
+
+  &__section-title {
+    font-size: $font-sm;
+    font-weight: 600;
+    color: $text-light;
+    text-transform: lowercase;
+    margin-bottom: $spacing-md;
+    display: block;
+  }
+
+  &__chats-list {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-sm;
+  }
+
+  &__chat-item {
+    padding: $spacing-md;
+    border: 1px solid $border-color;
+    border-radius: $radius-md;
+    background-color: transparent;
+    cursor: pointer;
+    transition: all $transition-fast;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-xs;
+
+    &:hover {
+      background-color: rgba(79, 70, 229, 0.1);
+      border-color: $primary-color;
+    }
+  }
+
+  &__chat-title {
+    font-size: $font-sm;
+    font-weight: 500;
+    color: $text-light;
+  }
+
+  &__chat-date {
+    font-size: $font-xs;
+    color: #64748b;
+  }
+
+  &__footer {
+    padding: $spacing-lg;
+    border-top: 1px solid $border-color;
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-md;
+  }
+
+  &__username {
+    font-size: $font-sm;
+    font-weight: 500;
+    color: $text-light;
+    flex: 1;
+  }
+
+  &__settings-btn {
+    background: none;
+    border: none;
+    font-size: $font-lg;
+    cursor: pointer;
+    transition: transform $transition-fast;
+    color: $text-light;
+
+    &:hover {
+      transform: rotate(20deg);
+    }
+  }
+}
+
+// Scrollbar styling
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: $border-color;
+  border-radius: 3px;
+
+  &:hover {
+    background: $border-light;
+  }
+}

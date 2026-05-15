@@ -1,0 +1,74 @@
+@import '../variables.scss';
+
+.message-input {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  padding: $spacing-lg;
+  background-color: $bg-darker;
+  border-top: 1px solid $border-color;
+  border-radius: $radius-lg $radius-lg 0 0;
+
+  &__field {
+    width: 100%;
+    min-height: 100px;
+    padding: $spacing-md;
+    font-size: $font-base;
+    color: $text-light;
+    background-color: $bg-dark;
+    border: 1px solid $border-color;
+    border-radius: $radius-md;
+    font-family: $font-family;
+    resize: vertical;
+    transition: all $transition-fast;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    &::placeholder {
+      color: #64748b;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-md;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  &__upload,
+  &__send {
+    background-color: transparent;
+    border: 1px solid $border-light;
+    color: $text-light;
+    padding: $spacing-sm $spacing-md;
+    border-radius: $radius-md;
+    font-size: $font-lg;
+    cursor: pointer;
+    transition: all $transition-fast;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      border-color: $primary-color;
+      color: $primary-color;
+      background-color: rgba(79, 70, 229, 0.1);
+    }
+  }
+
+  &__send {
+    border-color: $primary-color;
+    color: $primary-color;
+    font-weight: bold;
+
+    &:hover {
+      background-color: $primary-color;
+      color: white;
+    }
+  }
+}

@@ -1,0 +1,114 @@
+@import '../variables.scss';
+
+.dashboard {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  background-color: $bg-dark;
+
+  &__main {
+    margin-left: 250px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  &__header {
+    padding: $spacing-xl $spacing-2xl;
+    background-color: $bg-darker;
+    border-bottom: 1px solid $border-color;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__title {
+    h1 {
+      font-size: $font-2xl;
+      font-weight: 700;
+      color: $text-light;
+      margin-bottom: $spacing-xs;
+    }
+
+    p {
+      font-size: $font-sm;
+      color: #94a3b8;
+    }
+  }
+
+  &__logout {
+    padding: $spacing-md $spacing-lg;
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: $radius-md;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      background-color: $primary-dark;
+    }
+  }
+
+  &__chat-area {
+    flex: 1;
+    overflow-y: auto;
+    padding: $spacing-2xl;
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-lg;
+  }
+
+  &__empty-state {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    font-size: $font-lg;
+  }
+
+  &__messages {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+  }
+
+  &__input-area {
+    margin-top: auto;
+    padding: $spacing-lg;
+    background-color: $bg-darker;
+    border-top: 1px solid $border-color;
+  }
+}
+
+// Scrollbar styling
+.dashboard__chat-area::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dashboard__chat-area::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dashboard__chat-area::-webkit-scrollbar-thumb {
+  background: $border-color;
+  border-radius: 3px;
+
+  &:hover {
+    background: $border-light;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    flex-direction: column;
+
+    &__main {
+      margin-left: 0;
+    }
+  }
+}

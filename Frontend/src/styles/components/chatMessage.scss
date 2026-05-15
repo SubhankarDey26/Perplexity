@@ -1,0 +1,40 @@
+@import '../variables.scss';
+
+.chat-message {
+  padding: $spacing-md $spacing-lg;
+  margin-bottom: $spacing-md;
+  border-radius: $radius-lg;
+  max-width: 70%;
+  animation: slideIn 0.3s ease-in-out;
+
+  &--user {
+    align-self: flex-end;
+    margin-left: auto;
+    background-color: $primary-color;
+    color: white;
+  }
+
+  &--ai {
+    align-self: flex-start;
+    margin-right: auto;
+    background-color: $border-light;
+    color: $text-light;
+  }
+
+  &__content {
+    font-size: $font-base;
+    line-height: 1.5;
+    word-wrap: break-word;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -50,22 +50,9 @@ export async function registerController(req, res) {
             email:user.email
         },process.env.JWT_SECRET)
 
-        // Generate JWT token
-        // const token = generateToken(user._id)
-
-
-        // Store token in cookie
-        // res.cookie("token", token, {
-        //     httpOnly: true,
-        //     secure: false,
-        //     sameSite: "strict",
-        //     maxAge: 7 * 24 * 60 * 60 * 1000
-        // })
-
 
 // Create Verification Link
-const verificationLink = 
-`http://localhost:8000/api/auth/verify-email/${emailVerificatioToken}`
+const verificationLink = `http://localhost:8000/api/auth/verify-email/${emailVerificatioToken}`
 
 
 // Send Verification Email
@@ -144,7 +131,7 @@ export async function loginController(req, res) {
         // Find user
         const user = await userModel.findOne({ email })
 
-
+        // User not found
         if (!user) {
 
             return res.status(404).json({
@@ -153,10 +140,17 @@ export async function loginController(req, res) {
             })
         }
 
+        // Check if email verified
+        if (!user.verified) {
+
+            return res.status(401).json({
+                success: false,
+                message: "Please verify your email before login"
+            })
+        }
 
         // Compare password
         const isPasswordMatched = await user.comparePassword(password)
-
 
         if (!isPasswordMatched) {
 
@@ -166,10 +160,8 @@ export async function loginController(req, res) {
             })
         }
 
-
         // Generate token
         const token = generateToken(user._id)
-
 
         // Store token in cookie
         res.cookie("token", token, {
@@ -178,7 +170,6 @@ export async function loginController(req, res) {
             sameSite: "strict",
             maxAge: 7 * 24 * 60 * 60 * 1000
         })
-
 
         return res.status(200).json({
             success: true,
@@ -201,28 +192,77 @@ export async function loginController(req, res) {
 }
 
 
-export async function verifyEmail(req,res)
-{
-    const {token}=req.query
-    const decoded =jwt.verify(token,process.env.JWT_SECRET)
+//email verififcation
+export async function verifyEmail(req, res) {
 
-    const user=await userModel.findOne({
-        email:decoded.email
-    })
+    try {
+
+        const { token } = req.params
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET)
+
+        const user = await userModel.findOne({
+            email: decoded.email
+        })
+
+        if (!user) {
+
+            return res.status(404).json({
+                message: "Invalid Token",
+                success: false,
+                err: "User Not found"
+            })
+        }
+
+        // already verified
+        if (user.verified) {
+
+            return res.send(`
+                <h1>Email Already Verified</h1>
+                <p>You can login now.</p>
+            `)
+        }
+
+        user.verified = true
+
+        await user.save()
+
+        return res.send(`
+            <h1>Email Verified Successfully ✅</h1>
+            <p>Your email has been verified. You can now login.</p>
+        `)
+
+    } catch (error) {
+
+        return res.status(400).json({
+            success: false,
+            message: "Invalid or Expired Token",
+            error: error.message
+        })
+    }
+}
+
+
+//Get Current Loged In User Details
+export async function GetMe(req,res)
+{
+    const userId=req.user.id
+
+    const user=await userModel.findById(userId).select("-password")
+
 
     if(!user)
     {
         return res.status(404).json({
-            message:"Invalid Token",
+            message:"user Not Found",
             success:false,
-            err:"User Not found"
+            err:"User Not Found"
         })
     }
-    user.verified=true
 
-    await user.save()
-
-    res.send(`
-        <h1>Email Verified successfully</h1>
-        <p>Your email has been verified You can now log in to your account`)
+    res.status(200).json({
+        message:"user details fetched Successfully",
+        success:true,
+        user
+    })
 }

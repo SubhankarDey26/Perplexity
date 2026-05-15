@@ -1,0 +1,21 @@
+@import '../variables.scss';
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  margin-bottom: $spacing-lg;
+
+  &__label {
+    font-size: $font-base;
+    font-weight: 600;
+    color: $text-light;
+    display: block;
+  }
+
+  &__error {
+    font-size: $font-sm;
+    color: $danger-color;
+    margin-top: -$spacing-md;
+  }
+}
