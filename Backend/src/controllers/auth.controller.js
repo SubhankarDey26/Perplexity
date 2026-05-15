@@ -16,8 +16,6 @@ const generateToken = (userId) => {
 }
 
 
-
-
 // Register Controller
 export async function registerController(req, res) {
 
@@ -48,30 +46,70 @@ export async function registerController(req, res) {
             password
         })
 
+        const emailVerificatioToken=jwt.sign({
+            email:user.email
+        },process.env.JWT_SECRET)
 
         // Generate JWT token
-        const token = generateToken(user._id)
+        // const token = generateToken(user._id)
 
 
         // Store token in cookie
-        res.cookie("token", token, {
-            httpOnly: true,
-            secure: false,
-            sameSite: "strict",
-            maxAge: 7 * 24 * 60 * 60 * 1000
-        })
+        // res.cookie("token", token, {
+        //     httpOnly: true,
+        //     secure: false,
+        //     sameSite: "strict",
+        //     maxAge: 7 * 24 * 60 * 60 * 1000
+        // })
 
 
-        // Send welcome email
-        await sendEmail({
-            to: email,
-            subject: "Welcome to Perplexity Clone 🚀",
-            text: `Hello ${username}, your account has been created successfully.`,
-            html: `
-                <h2>Welcome ${username}</h2>
-                <p>Your account has been created successfully.</p>
-            `
-        })
+// Create Verification Link
+const verificationLink = 
+`http://localhost:8000/api/auth/verify-email/${emailVerificatioToken}`
+
+
+// Send Verification Email
+await sendEmail({
+
+    to: email,
+
+    subject: "Verify Your Email",
+
+    text: `Click this link to verify your email: ${verificationLink}`,
+
+    html: `
+
+        <h2>Welcome ${username}</h2>
+
+        <p>
+            Please verify your email by clicking the button below.
+        </p>
+
+        <a 
+            href="${verificationLink}"
+            style="
+                background:black;
+                color:white;
+                padding:10px 20px;
+                text-decoration:none;
+                border-radius:5px;
+                display:inline-block;
+            "
+        >
+            Verify Email
+        </a>
+
+        <br><br>
+
+        <p>
+            Or copy this link:
+        </p>
+
+        <p>
+            ${verificationLink}
+        </p>
+    `
+})
 
 
         return res.status(201).json({
@@ -96,16 +134,12 @@ export async function registerController(req, res) {
 }
 
 
-
-
-
 // Login Controller
 export async function loginController(req, res) {
 
     try {
 
         const { email, password } = req.body
-
 
         // Find user
         const user = await userModel.findOne({ email })
@@ -164,4 +198,31 @@ export async function loginController(req, res) {
             error: error.message
         })
     }
+}
+
+
+export async function verifyEmail(req,res)
+{
+    const {token}=req.query
+    const decoded =jwt.verify(token,process.env.JWT_SECRET)
+
+    const user=await userModel.findOne({
+        email:decoded.email
+    })
+
+    if(!user)
+    {
+        return res.status(404).json({
+            message:"Invalid Token",
+            success:false,
+            err:"User Not found"
+        })
+    }
+    user.verified=true
+
+    await user.save()
+
+    res.send(`
+        <h1>Email Verified successfully</h1>
+        <p>Your email has been verified You can now log in to your account`)
 }

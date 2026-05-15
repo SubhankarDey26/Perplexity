@@ -1,51 +1,3 @@
-// import nodemailer from "nodemailer"
-
-// // create a connection between web server and smtp server
-// const transporter = nodemailer.createTransport({
-//   service: 'gmail',
-//   auth: {
-//     type: 'OAuth2',
-//     user: process.env.EMAIL_USER,
-//     clientId: process.env.CLIENT_ID,
-//     clientSecret: process.env.CLIENT_SECRET,
-//     refreshToken: process.env.REFRESH_TOKEN,
-//   },
-// });
-
-
-// // Verify the connection configuration
-// transporter.verify((error, success) => {
-//   if (error) {
-//     console.error('Error connecting to email server:', error);
-//   } else {
-//     console.log('Email server is ready to send messages');
-//   }
-// });
-
-
-// export async function sendEmail({to,subject,html,text})
-// {
-//     const mailOptions={
-//         from:process.env.GOOGLE_USER,
-//         to,
-//         subject,
-//         html,
-//         text
-//     };
-//     const details=await transporter.sendMail(mailOptions);
-//     console.log("Email Sent:",details)
-// }
-
-
-
-
-
-
-
-
-
-
-
 import nodemailer from "nodemailer"
 import { google } from "googleapis"
 
@@ -66,12 +18,12 @@ const oauth2Client = new OAuth2(
 
 
 // Debug Logs
-console.log("====================================")
-console.log("GOOGLE CLIENT ID:", process.env.GOOGLE_CLIENT_ID)
-console.log("GOOGLE CLIENT SECRET:", process.env.GOOGLE_CLIENT_SECRET)
-console.log("GOOGLE REFRESH TOKEN:", process.env.GOOGLE_REFRESH_TOKEN)
-console.log("GOOGLE USER:", process.env.GOOGLE_USER)
-console.log("====================================")
+// console.log("====================================")
+// console.log("GOOGLE CLIENT ID:", process.env.GOOGLE_CLIENT_ID)
+// console.log("GOOGLE CLIENT SECRET:", process.env.GOOGLE_CLIENT_SECRET)
+// console.log("GOOGLE REFRESH TOKEN:", process.env.GOOGLE_REFRESH_TOKEN)
+// console.log("GOOGLE USER:", process.env.GOOGLE_USER)
+// console.log("====================================")
 
 
 
@@ -99,9 +51,9 @@ export async function sendEmail({
         const accessTokenResponse = await oauth2Client.getAccessToken()
 
 
-        console.log("====================================")
-        console.log("ACCESS TOKEN RESPONSE:", accessTokenResponse)
-        console.log("====================================")
+        // console.log("====================================")
+        // console.log("ACCESS TOKEN RESPONSE:", accessTokenResponse)
+        // console.log("====================================")
 
 
         const accessToken = accessTokenResponse?.token
@@ -159,21 +111,17 @@ export async function sendEmail({
         const mailOptions = {
 
             from: process.env.GOOGLE_USER,
-
             to,
-
             subject,
-
             html,
-
             text
         }
 
 
 
-        console.log("====================================")
-        console.log("SENDING EMAIL TO:", to)
-        console.log("====================================")
+        // console.log("====================================")
+        // console.log("SENDING EMAIL TO:", to)
+        // console.log("====================================")
 
 
 
@@ -183,10 +131,10 @@ export async function sendEmail({
 
 
 
-        console.log("====================================")
-        console.log("EMAIL SENT SUCCESSFULLY")
-        console.log("MESSAGE ID:", details.messageId)
-        console.log("====================================")
+        // console.log("====================================")
+        // console.log("EMAIL SENT SUCCESSFULLY")
+        // console.log("MESSAGE ID:", details.messageId)
+        // console.log("====================================")
 
 
 
